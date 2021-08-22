@@ -3,7 +3,7 @@ package com.binar.binar.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Id;//wajib
+import javax.persistence.Id;//wajib untuk mysql
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,10 +12,15 @@ import java.io.Serializable;
 @Entity
 @Table(name = "barang")
 public class Barang implements Serializable {
+// in mysql
+//    @Id
+//    @Column(name="id")
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
+//    private Long id;
 
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "nama", nullable = false, length = 45)
