@@ -13,4 +13,6 @@ public interface BarangService {
     public Map delete(Long barang);
 
     public Map getAll();
+
+
 }
