@@ -15,12 +15,63 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-@Transactional
+/*
+1. buat pakcgae impl
+2. buat class BarangImpl di imple dari intercafe class
+3. implement method
+ */
+@Service //service wajib
+@Transactional // opsional :
 public class BarangImpl implements BarangService {
-
-    @Autowired// ini wajib
+    // // IOC DI
+    @Autowired
     public BarangRepo repo;
+
+    @Override
+    public Map  getAll() {
+        List<Barang> list = new ArrayList<Barang>();
+        Map map = new HashMap();
+        try {
+
+            list = repo.getList();
+            map.put("data", list);//data
+            map.put("statusCode", 200);
+            map.put("statusMessage", "Get Sukses");
+            return map;//success
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("statusCode", "500");
+            map.put("statusMessage", e);
+            return map;// eror
+        }
+    }
+
+    @Override
+    public Map findByNama(String nama, Integer page, Integer size) {
+
+        Map map = new HashMap();
+        try {
+            Pageable show_data = PageRequest.of(page, size);
+            Page<Barang> list = repo.findByNama(nama, show_data);
+
+            map.put("data", list);//data
+            map.put("statusCode", 200);
+            map.put("statusMessage", "Get Sukses");
+            return map;//success
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("statusCode", "500");
+            map.put("statusMessage", e);
+            return map;// eror
+        }
+    }
+
+    @Override
+    public Page<Barang> findByNamaLike(String nama, Pageable pageable) {
+        return null;
+    }
 
 
     @Override
@@ -32,11 +83,11 @@ public class BarangImpl implements BarangService {
     nama  = \
     localho : port /api/path
    */
-            Barang obj = repo.save(barang);
+            Barang obj = repo.save(barang); //JPA
             map.put("data", obj);
             map.put("statusCode", "200");
             map.put("statusMessage", "Sukses");
-            return map;
+            return map;// respon
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,12 +103,24 @@ public class BarangImpl implements BarangService {
         try {
 
             Barang obj = repo.getbyID(barang.getId());
+            // validasi is null return message eror
+            if(obj == null ){
+                map.put("statusCode", "404");
+                map.put("statusMessage", "Data id tidak ditemukan");
+                // kode stop
+                return map;
+            }
+
             obj.setNama(barang.getNama());
             obj.setHarga(obj.getHarga());
             obj.setSatuan(obj.getSatuan());
             obj.setStok(obj.getStok());
 
-            repo.save(obj);
+            repo.save(obj);//save
+//            update barang
+//                    set nama = "a"  // request
+//                            where id = 1 //  chek by id
+//            3 : simpan data
             map.put("data", obj);
             map.put("statusCode", "200");
             map.put("statusMessage", "Update Sukses");
@@ -77,8 +140,14 @@ public class BarangImpl implements BarangService {
         try {
 
             Barang obj = repo.getbyID(idbarang);
+            if(obj == null){
+                map.put("statusCode", "404");
+                map.put("statusMessage", "data id tidak ditemuakan");
+                return map;
+            }
 
-            repo.deleteById(obj.getId());
+            repo.deleteById(obj.getId()); //provide JPA : delete permanen
+            // sof delete : field isdate_delete : jika
             map.put("statusCode", "200");
             map.put("statusMessage", "Delete Sukses");
             return map;
@@ -91,25 +160,7 @@ public class BarangImpl implements BarangService {
         }
     }
 
-    @Override
-    public Map  getAll() {
-        List<Barang> list = new ArrayList<Barang>();
-        Map map = new HashMap();
-        try {
 
-            list = repo.getList();
-            map.put("data", list);
-            map.put("statusCode", "200");
-            map.put("statusMessage", "Delete Sukses");
-            return map;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            map.put("statusCode", "500");
-            map.put("statusMessage", e);
-            return map;
-        }
-    }
 
 
 }

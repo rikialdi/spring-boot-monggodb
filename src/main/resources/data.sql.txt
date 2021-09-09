@@ -1,0 +1,16 @@
+-- DROP TABLE IF EXISTS testh2;
+-- DROP SEQUENCE IF EXISTS testh2_id_seq;
+--
+-- CREATE SEQUENCE testh2_id_seq;
+--
+-- CREATE TABLE testh2 (
+--   id INT NOT NULL DEFAULT nextval('testh2_id_seq')  PRIMARY KEY,
+--   first_name VARCHAR(250) NOT NULL,
+--   last_name VARCHAR(250) NOT NULL,
+--   career VARCHAR(250) DEFAULT NULL
+-- );
+--
+-- INSERT INTO testh2 (first_name, last_name, career) VALUES
+--   ('Aliko', 'Dangote', 'Billionaire Industrialist'),
+--   ('Bill', 'Gates', 'Billionaire Tech Entrepreneur'),
+--   ('Folrunsho', 'Alakija', 'Billionaire Oil Magnate');

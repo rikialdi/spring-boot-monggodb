@@ -1,11 +1,16 @@
 package com.binar.binar.controller;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.binar.binar.entity.Barang;
+import com.binar.binar.entity.Supplier;
 import com.binar.binar.repository.BarangRepo;
+import com.binar.binar.repository.SupplierRepo;
 import com.binar.binar.service.BarangService;
+import com.binar.binar.service.impl.BarangImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +26,28 @@ import javax.validation.Valid;
 @RequestMapping("/v1/binar/")// localhost :8080/v1/binar
 public class BarangControllerAPI {
 
+
+    // ini wajib
+    @Autowired
+    public BarangRepo repo;
+
+    @Autowired
+    public SupplierRepo repoSupp;
+
+//    @Autowired
+//    public BarangImpl imp;
+
     @Autowired
     BarangService servis;
 
-    @Autowired// ini wajib
-    public BarangRepo repo;
+
+    @GetMapping("/listpage")
+    @ResponseBody
+    public ResponseEntity<Map>  getList() {
+        Map c = servis.getAll();
+        return new ResponseEntity<Map>(c, HttpStatus.OK);
+    }
+
 
     @PostMapping("/save")// localhost :8080/v1/binar/save
     public ResponseEntity<Map> save(@Valid @RequestBody Barang objModel) {
@@ -35,7 +57,7 @@ public class BarangControllerAPI {
 
         map.put("Request =", objModel);
         map.put("Response =", obj);
-        return new ResponseEntity<Map>(obj, HttpStatus.OK);
+        return new ResponseEntity<Map>(obj, HttpStatus.OK);// response
     }
 
     @PutMapping("/update")
@@ -57,12 +79,7 @@ public class BarangControllerAPI {
         return new ResponseEntity<Map>(c, HttpStatus.OK);
     }
 
-    @GetMapping("/listpage")
-    @ResponseBody
-    public ResponseEntity<Map>  getList() {
-        Map c = servis.getAll();
-        return new ResponseEntity<Map>(c, HttpStatus.OK);
-    }
+
 
     @GetMapping("/listbynama")
     public ResponseEntity<Page<Barang>> getpage2(
@@ -84,4 +101,25 @@ public class BarangControllerAPI {
         Page<Barang> list = repo.findByNamaLike("%"+nama+"%", show_data);
         return new ResponseEntity<Page<Barang>>(list, new HttpHeaders(), HttpStatus.OK);
     }
+
+    @PostMapping("/supplier/save")// localhost :8080/v1/binar/save
+    public ResponseEntity<Map> saveSupplier(@Valid @RequestBody Supplier objModel) {
+
+        Map map = new HashMap();
+        Supplier supp= repoSupp.save(objModel);
+
+        map.put("Request =", supp);
+        map.put("Response =", "");
+        return new ResponseEntity<Map>(map, HttpStatus.OK);// response
+    }
+
+    @GetMapping("/listpage/supp")
+    @ResponseBody
+    public ResponseEntity<Map>  supp() {
+        Map map = new HashMap();
+      List<Supplier> s= repoSupp.getList();
+        map.put("data", s);
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
+    }
+
 }
