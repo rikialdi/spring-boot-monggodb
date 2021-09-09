@@ -1,7 +1,9 @@
 package com.binar.binar.service.impl;
 
 import com.binar.binar.entity.Barang;
+import com.binar.binar.entity.Supplier;
 import com.binar.binar.repository.BarangRepo;
+import com.binar.binar.repository.SupplierRepo;
 import com.binar.binar.service.BarangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,9 @@ public class BarangImpl implements BarangService {
     // // IOC DI
     @Autowired
     public BarangRepo repo;
+
+    @Autowired
+    public SupplierRepo repoSupp;
 
     @Override
     public Map  getAll() {
@@ -75,14 +80,12 @@ public class BarangImpl implements BarangService {
 
 
     @Override
-    public Map insert(Barang barang) {
+    public Map insert(Barang barang , Long idsupplier) {
         Map map = new HashMap();
         try {
-  /*
-    id = id ,
-    nama  = \
-    localho : port /api/path
-   */
+            Supplier supp = repoSupp.getbyID(idsupplier);
+            barang.setSupplier(supp);
+
             Barang obj = repo.save(barang); //JPA
             map.put("data", obj);
             map.put("statusCode", "200");
@@ -98,9 +101,10 @@ public class BarangImpl implements BarangService {
     }
 
     @Override
-    public Map update(Barang barang) {
+    public Map update(Barang barang, Long idsupplier) {
         Map map = new HashMap();
         try {
+            Supplier supp = repoSupp.getbyID(idsupplier);
 
             Barang obj = repo.getbyID(barang.getId());
             // validasi is null return message eror
@@ -115,6 +119,8 @@ public class BarangImpl implements BarangService {
             obj.setHarga(obj.getHarga());
             obj.setSatuan(obj.getSatuan());
             obj.setStok(obj.getStok());
+            obj.setSupplier(supp);
+
 
             repo.save(obj);//save
 //            update barang

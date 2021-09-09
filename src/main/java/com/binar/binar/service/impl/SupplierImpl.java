@@ -26,18 +26,10 @@ public class SupplierImpl implements SupplierService {
 
     @Override
     public Map insert(Supplier supplier) {
-
-        //suppliar sekaligus :insert si barang
         Map map = new HashMap();
         try {
+
             Supplier obj = repo.save(supplier); //JPA
-            // ini tidak perlu: karena otomatis
-//            if(obj.getBarang() !=null){
-//                for(Barang objBarang : obj.getBarang()){
-//                    objBarang.setSupplier(obj);
-//                    repoBarang.save(objBarang);
-//                }
-//            }
             map.put("data", obj);
             map.put("statusCode", "200");
             map.put("statusMessage", "Sukses");
@@ -49,26 +41,38 @@ public class SupplierImpl implements SupplierService {
             map.put("statusMessage", e);
             return map;
         }
+    }
 
-//            {
-//                "nama":"nama",
-//                "hp":"123",
-//                "alamat":"alamat",
-//                "barang": [
-//                        {
-//                            "nama":"nama",
-//                            "satuan":"pcs",
-//                            "stok":"10",
-//                            "harga":"100"
-//                        },
-//                        {
-//                                "nama":"nama",
-//                                "satuan":"pcs",
-//                                "stok":"10",
-//                                "harga":"100"
-//                        }
-//                        ]
-//            }
+    @Override
+    public Map update(Supplier supplier) {
+        Map map = new HashMap();
+        try {
+
+            Supplier obj = repo.getbyID(supplier.getId());
+            // validasi is null return message eror
+            if(obj == null ){
+                map.put("statusCode", "404");
+                map.put("statusMessage", "Data id tidak ditemukan");
+                // kode stop
+                return map;
+            }
+
+            obj.setNama(supplier.getNama());
+            obj.setAlamat(obj.getAlamat());
+            obj.setHp(obj.getHp());
+
+            repo.save(obj);
+            map.put("data", obj);
+            map.put("statusCode", "200");
+            map.put("statusMessage", "Update Sukses");
+            return map;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("statusCode", "500");
+            map.put("statusMessage", e);
+            return map;
+        }
     }
 
     @Override

@@ -49,22 +49,22 @@ public class BarangControllerAPI {
     }
 
 
-    @PostMapping("/save")// localhost :8080/v1/binar/save
-    public ResponseEntity<Map> save(@Valid @RequestBody Barang objModel) {
+    @PostMapping("/save/{idsupplier}")// localhost :8080/v1/binar/save
+    public ResponseEntity<Map> save(@PathVariable(value = "idsupplier") Long idsupplier,@Valid @RequestBody Barang objModel) {
 
         Map map = new HashMap();
-        Map obj = servis.insert(objModel);
+        Map obj = servis.insert(objModel, idsupplier);
 
         map.put("Request =", objModel);
         map.put("Response =", obj);
         return new ResponseEntity<Map>(obj, HttpStatus.OK);// response
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Map> update(@Valid @RequestBody Barang objModel) {
+    @PutMapping("/update/{idsupplier}")
+    public ResponseEntity<Map> update(@PathVariable(value = "idsupplier") Long idsupplier, @Valid @RequestBody Barang objModel ) {
 
         Map map = new HashMap();
-        Map c = servis.update(objModel);
+        Map c = servis.update(objModel, idsupplier);
 
         map.put("Request =", objModel);
         map.put("Response =", c);
@@ -102,24 +102,15 @@ public class BarangControllerAPI {
         return new ResponseEntity<Page<Barang>>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping("/supplier/save")// localhost :8080/v1/binar/save
-    public ResponseEntity<Map> saveSupplier(@Valid @RequestBody Supplier objModel) {
 
-        Map map = new HashMap();
-        Supplier supp= repoSupp.save(objModel);
 
-        map.put("Request =", supp);
-        map.put("Response =", "");
-        return new ResponseEntity<Map>(map, HttpStatus.OK);// response
-    }
-
-    @GetMapping("/listpage/supp")
-    @ResponseBody
-    public ResponseEntity<Map>  supp() {
-        Map map = new HashMap();
-      List<Supplier> s= repoSupp.getList();
-        map.put("data", s);
-        return new ResponseEntity<Map>(map, HttpStatus.OK);
-    }
+//    @GetMapping("/listpage/supp")
+//    @ResponseBody
+//    public ResponseEntity<Map>  supp() {
+//        Map map = new HashMap();
+//      List<Supplier> s= repoSupp.getList();
+//        map.put("data", s);
+//        return new ResponseEntity<Map>(map, HttpStatus.OK);
+//    }
 
 }

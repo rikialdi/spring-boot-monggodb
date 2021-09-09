@@ -13,9 +13,9 @@ import java.util.Map;
 3. Create method
  */
 public interface BarangService {
-    public Map insert(Barang barang);// request lempar objek
+    public Map insert(Barang barang,Long idsupplier);// request lempar objek
 
-    public Map update(Barang barang); //DI objek request
+    public Map update(Barang barang, Long idsupplier); //DI objek request
 
     public Map delete(Long barang);// delete by id
 

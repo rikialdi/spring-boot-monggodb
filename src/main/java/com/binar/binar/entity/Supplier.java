@@ -35,4 +35,5 @@ public class Supplier implements Serializable {
     private List<Barang> barang;
 
 
+
 }

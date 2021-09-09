@@ -8,5 +8,7 @@ import java.util.Map;
 public interface SupplierService {
      public Map insert(Supplier supplier);
 
+     public Map update(Supplier supplier);
+
      public Map getData();
 }

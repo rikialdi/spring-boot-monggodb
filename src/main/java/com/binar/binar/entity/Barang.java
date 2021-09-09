@@ -43,11 +43,11 @@ public class Barang implements Serializable {// sequesnse
     private int harga;
 
 
-
+    @JsonIgnore
     @ManyToOne(targetEntity = Supplier.class, cascade = CascadeType.ALL)
     private Supplier supplier;//ok
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "barang")
     private Set<Transaksi> transaksi;
 

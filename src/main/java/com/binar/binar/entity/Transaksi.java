@@ -1,5 +1,6 @@
 package com.binar.binar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +17,11 @@ public class Transaksi  extends AuditDate implements Serializable {
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "barang_id")
     Barang barang;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pembeli_id")
     Pembeli pembeli;
