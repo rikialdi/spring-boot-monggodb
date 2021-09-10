@@ -33,6 +33,7 @@ public interface BarangRepo extends JpaRepository<Barang, Long> {
 
     Page<Barang> findByNamaLike(String nama, Pageable pageable);
 
+    // step 2 DTO ENTITAS :
     @Query(value="select new com.binar.binar.model.ModelBarang(a.id, a.nama) from Barang a")
     List<ModelBarang> modelDTO();
 
@@ -53,6 +54,7 @@ public interface BarangRepo extends JpaRepository<Barang, Long> {
     @Query(value="update barang set nama= :nama where id = :id", nativeQuery=true)
     void updatenativebyid(@Param("id") Long id, @Param("nama") String nama);
 
+    // step 2
     @Query(value = "SELECT p.id, p.nama FROM barang p ", nativeQuery = true)
     List<Object[]> getDataAllNative();
 

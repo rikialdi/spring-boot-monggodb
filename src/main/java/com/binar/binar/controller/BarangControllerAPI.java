@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.binar.binar.entity.Barang;
 import com.binar.binar.entity.Supplier;
+import com.binar.binar.model.ModelBarang;
 import com.binar.binar.repository.BarangRepo;
 import com.binar.binar.repository.SupplierRepo;
 import com.binar.binar.service.BarangService;
@@ -25,7 +26,7 @@ public class BarangControllerAPI {
 
 
     // ini wajib
-    @Autowired
+    @Autowired //
     public BarangRepo repo;
 
     @Autowired
@@ -43,6 +44,24 @@ public class BarangControllerAPI {
     public ResponseEntity<Map>  getList() {
         Map c = servis.getAll();
         return new ResponseEntity<Map>(c, HttpStatus.OK);
+    }
+
+    // step akhir DTO
+    @GetMapping("/listpagenative")
+    @ResponseBody
+    public ResponseEntity<Map>  listpagenative() {
+        Map c = servis.getAllNative();
+        return new ResponseEntity<Map>(c, HttpStatus.OK);
+    }
+
+    // step akhir DTO untuk entitas
+    @GetMapping("/listpageentitas")
+    @ResponseBody
+    public ResponseEntity<Map>  listpageentitas() {
+        Map map = new HashMap();
+        List<ModelBarang> obj = repo.modelDTO();
+        map.put("data", obj);
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
 

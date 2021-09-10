@@ -2,6 +2,7 @@ package com.binar.binar.service.impl;
 
 import com.binar.binar.entity.Barang;
 import com.binar.binar.entity.Supplier;
+import com.binar.binar.model.ModelBarang;
 import com.binar.binar.repository.BarangRepo;
 import com.binar.binar.repository.SupplierRepo;
 import com.binar.binar.service.BarangService;
@@ -76,6 +77,33 @@ public class BarangImpl implements BarangService {
     @Override
     public Page<Barang> findByNamaLike(String nama, Pageable pageable) {
         return null;
+    }
+
+    @Override
+    public Map getAllNative() {
+
+        Map map = new HashMap();
+        try {
+
+            List<Object[]> obj = repo.getDataAllNative();
+            List<ModelBarang> dtoList = new ArrayList<ModelBarang>();
+            for (Object[] s_detail : obj) {
+                System.out.println("id ="+s_detail[0] + " nama="+s_detail[1]);
+                ModelBarang dto = new ModelBarang(Long.parseLong(s_detail[0].toString()),s_detail[1].toString());
+//                dtoList.add(new ModelBarang(Long.parseLong(s_detail[0].toString()),s_detail[1].toString())); // cara cepat
+                dtoList.add(dto);// cara 1
+            }
+            map.put("data", dtoList);//data
+            map.put("statusCode", 200);
+            map.put("statusMessage", "Get Sukses");
+            return map;//success
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("statusCode", "500");
+            map.put("statusMessage", e);
+            return map;// eror
+        }
     }
 
 

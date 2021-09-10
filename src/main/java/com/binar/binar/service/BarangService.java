@@ -25,6 +25,8 @@ public interface BarangService {
 
     Page<Barang> findByNamaLike(String nama, Pageable pageable);
 
+    public Map getAllNative();
+
 
 
 }
