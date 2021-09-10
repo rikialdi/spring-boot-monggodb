@@ -35,6 +35,7 @@ public class BarangServiceControllerTest extends UnitTest{
 
     @Test
     public void getProductsList() throws Exception {
+        //call appi localhost
         String uri = "/v1/binar/listpage";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();

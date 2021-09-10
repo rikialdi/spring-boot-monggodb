@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,20 @@ public class SupplierController {
     @ResponseBody
     public ResponseEntity<Map> getpage2(
             @RequestParam() Integer page,
-            @RequestParam() Integer size) {
+            @RequestParam() Integer size,
+            @RequestParam() String namashort,
+            @RequestParam() String typeShort) {
         Map map = new HashMap();
-        Pageable show_data = PageRequest.of(page, size);
-        map.put("data", repo.findAll(show_data));
+        String getshorting = namashort.equals("") ? "id" : namashort;
+        Pageable show_data;
+        if(typeShort.equals("desc")){ //desc or asc
+              show_data = PageRequest.of(page, size, Sort.by(getshorting).descending());
+        }else{
+            show_data = PageRequest.of(page, size, Sort.by(getshorting).ascending());
+        }
+
+//
+                map.put("data", repo.findAll(show_data));
         return new ResponseEntity<Map>(map, new HttpHeaders(), HttpStatus.OK);
     }
 

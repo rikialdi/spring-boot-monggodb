@@ -58,6 +58,9 @@ public interface BarangRepo extends JpaRepository<Barang, Long> {
     @Query(value = "SELECT p.id, p.nama FROM barang p ", nativeQuery = true)
     List<Object[]> getDataAllNative();
 
+//    @Query("select c from TempSesiEventZona c WHERE c.event.id = :id and c.team.id =:teamid")
+//    public List<TempSesiEventZona> getbyeventandTeam(@Param("id") Long id, @Param("teamid") Long teamid);
+
 
 
 }
