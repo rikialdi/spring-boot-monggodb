@@ -53,8 +53,8 @@ public interface BarangRepo extends JpaRepository<Barang, Long> {
     @Query(value="update barang set nama= :nama where id = :id", nativeQuery=true)
     void updatenativebyid(@Param("id") Long id, @Param("nama") String nama);
 
-    @Query(value = "SELECT p.id as nama FROM barang p WHERE id = :id", nativeQuery = true)
-    ModelBarang getbyidNative(Long id);
+    @Query(value = "SELECT p.id, p.nama FROM barang p ", nativeQuery = true)
+    List<Object[]> getDataAllNative();
 
 
 

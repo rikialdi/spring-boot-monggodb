@@ -18,12 +18,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "barang")
-public class Barang implements Serializable {// sequesnse
-// in mysql
-//    @Id
-//    @Column(name="id")
-//    @GeneratedValue(strategy=GenerationType.IDENTITY)
-//    private Long id;
+public class Barang extends AbstractDate implements Serializable  {
 
     @Id  // menyatakan primary key
     @Column(name="id")

@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "supplier")
-public class Supplier implements Serializable {
+public class Supplier extends AbstractDate implements Serializable {
 
     @Id
     @Column(name="id")

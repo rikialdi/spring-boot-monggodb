@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Entity
 @Table(name = "transaksi")
-public class Transaksi  extends AuditDate implements Serializable {
+public class Transaksi  extends AbstractDate  implements Serializable {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)

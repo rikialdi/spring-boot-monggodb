@@ -1,9 +1,6 @@
 package com.binar.binar.controller;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.binar.binar.entity.Barang;
 import com.binar.binar.entity.Supplier;
@@ -75,8 +72,12 @@ public class BarangControllerAPI {
     public ResponseEntity<Map> delete(@PathVariable(value = "id") Long id) {
 
         Map map = new HashMap();
-        Map c = servis.delete(id);
-        return new ResponseEntity<Map>(c, HttpStatus.OK);
+//        Map c = servis.delete(id);
+        Barang obj = repo.getbyID(id);
+        obj.setDeleted_date(new Date());
+        repo.save(obj);
+        map.put("data", "sukses delete");
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
 

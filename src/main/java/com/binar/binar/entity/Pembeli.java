@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "pembeli")
-public class Pembeli implements Serializable {
+public class Pembeli extends AbstractDate implements Serializable {
 
     @Id
     @Column(name="id")
@@ -33,7 +33,7 @@ public class Pembeli implements Serializable {
     private String alamat;
 
     @OneToOne(mappedBy = "pembeli")
-    private PembeliDetail pembeliDetail;
+    private PembeliDetail pembelidetail;
 
     @OneToMany(mappedBy = "pembeli")
     Set<Transaksi> transaksi;

@@ -58,12 +58,24 @@ public class BarangServiceControllerTest extends UnitTest{
     public void dtoModel() throws Exception {
         List<ModelBarang> count = repo.modelDTO();
         System.out.println("total ="+count);
+        for(ModelBarang a : count){
+            System.out.println("nama="+a.getNama());
+        }
     }
 
     @Test
     public void getbyNamaNative() throws Exception {
        Object[] obj = repo.getbyNamaNative("webbinar 10");
         System.out.println("getbyNamaNative ="+obj);
+    }
+
+    @Test
+    public void getDataAllNative() throws Exception {
+        List<Object[]> obj = repo.getDataAllNative();
+        for (Object[] s_detail : obj) {
+            System.out.println("id ="+s_detail[0] + " nama="+s_detail[1]);
+            ModelBarang dto = new ModelBarang(Long.parseLong(s_detail[0].toString()),s_detail[1].toString());
+        }
     }
 
 
