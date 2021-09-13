@@ -1,5 +1,7 @@
 package com.binar.binar.controller.fileupload;
 
+import com.binar.binar.entity.Barang;
+import com.binar.binar.repository.BarangRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,45 +42,67 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private BarangRepo repoBarang; // step
+
 
     @RequestMapping(value = "/v1/upload", method = RequestMethod.POST, consumes = {"multipart/form-data", "application/json"})
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+//        Long id = 1L;
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("ddMyyyyhhmmss");
         String strDate = formatter.format(date);
         System.out.println("date=" + strDate);
+        // step 1 definisika path dan nama file yang akan dupalod . d://temp//fil1.txt
         String fileName = UPLOADED_FOLDER + strDate + file.getOriginalFilename();
+//        String fileNameforDB = strDate + file.getOriginalFilename();
         String fileNameforDOwnload = strDate + file.getOriginalFilename();
+        // step 2 : cheak path untuk upload
         Path TO = Paths.get(fileName);
         System.out.println("fileNameforDOwnload=" + fileNameforDOwnload);
         System.out.println("file=" + file.getName());
-        System.out.println("file.getContentType()=" + file.getContentType()); // image/png
+        System.out.println("file.getContentType()=" + file.getContentType()); // image/png,
         System.out.println("file.getResource()=" + file.getResource()); // 23474 == 23kb  , 10000kb = 10MB https://www.google.com/search?q=1+kb+berapa+mb&oq=1+kb+berapa+mb&aqs=chrome..69i57j0i22i30l9.3835j0j4&sourceid=chrome&ie=UTF-8
         System.out.println("file.getOriginalFilename()=" + file.getOriginalFilename());
 
+//        //validasi hanya boleh PNG
+//        if(!file.getContentType().equals("image/png")){
+//            return null;// eror
+//        }
+
         try {
-            Files.copy(file.getInputStream(), TO);
+            // step 3 generate file ke folder d://temp
+            Files.copy(file.getInputStream(), TO); // pengolahan upload disini :
+//            // step 3 - simpan ke table barang
+//            Barang obj = repoBarang.getbyID(id);
+//            String getDataLama = obj.getNama();
+//            // validasi not null
+//            obj.setNama(fileNameforDB);
+//            // step 4 : simpan ke database
+//            repoBarang.save(obj);
+//            //setelah sukse : kita pingin hapus data lama.
+//            File s = new File(UPLOADED_FOLDER+getDataLama);
+//            s.delete();
+
         } catch (Exception e) {
             e.printStackTrace();
             e.printStackTrace();
             return new UploadFileResponse(fileName, null,
                     file.getContentType(), file.getSize(), e.getMessage());
         }
-
+        // step 4 : dget URL download. sbgai respose ke client.
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/v1/showFile/")
                 .path(fileNameforDOwnload)
                 .toUriString();
 
+        // step 5 tampilkan sebgai respone
         return new UploadFileResponse(fileNameforDOwnload, fileDownloadUri,
                 file.getContentType(), file.getSize(), "false");
     }
 
     @GetMapping("v1/showFile/{fileName:.+}")
-    public ResponseEntity<Resource> showFile(@PathVariable String fileName, HttpServletRequest request) {
-
-
-        // Load file as Resource
+    public ResponseEntity<Resource> showFile(@PathVariable String fileName, HttpServletRequest request) { // Load file as Resource : step 1 load path lokasi name file
         Resource resource = fileStorageService.loadFileAsResource(fileName);
 
         // Try to determine file's content type
