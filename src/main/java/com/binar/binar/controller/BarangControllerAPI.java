@@ -16,10 +16,12 @@ import com.binar.binar.repository.SupplierRepo;
 import com.binar.binar.service.BarangService;
 import com.binar.binar.service.impl.BarangImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -45,6 +47,9 @@ public class BarangControllerAPI {
 
     @Autowired
     BarangService servis;
+
+    @Value("${app.uploadto.cdn}")//FILE_SHOW_RUL
+    private String UPLOADED_FOLDER;
 
 
     @GetMapping("/listpage")
@@ -131,13 +136,15 @@ public class BarangControllerAPI {
     }
 
 
-    @RequestMapping(value = "/v1/uploadlansgunginsert/{idsupplier}", method = RequestMethod.POST, consumes = {"multipart/form-data", "application/json"})
-    public ResponseEntity<Map> uploadFile(@RequestParam("file") MultipartFile file, @Valid @RequestBody Barang objModel, @PathVariable(value = "idsupplier") Long idsupplier) throws IOException {
+    @PostMapping(value = "/uploadsimpanbarang/{idsupplier}",consumes = {"multipart/form-data", "application/json"})// @RequestMapping(value = "/v1/uploadlansgunginsert/{idsupplier}", method = RequestMethod.POST, consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<Map> uploadFile(@RequestParam(value="file", required = true) MultipartFile file,  @PathVariable(value = "idsupplier") Long idsupplier,
+                                          @RequestParam(value="nama", required = true) String nama,
+                                          @RequestParam(value="stok", required = true) int stok,
+                                          @RequestParam(value="satuan", required = true) String  satuan,
+                                          @RequestParam(value="harga", required = true) int harga)  {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("ddMyyyyhhmmss");
         String strDate = formatter.format(date);
-        System.out.println("date=" + strDate);
-        String UPLOADED_FOLDER = "D://temp//uploadbinar//karyawan//";
         String fileName = UPLOADED_FOLDER + strDate + file.getOriginalFilename();
         String fileNameforDOwnload = strDate + file.getOriginalFilename();
         Path TO = Paths.get(fileName);
@@ -145,8 +152,13 @@ public class BarangControllerAPI {
         try {
             Files.copy(file.getInputStream(), TO); // pengolahan upload disini :
             // insert barang
-            objModel.setFilenama(fileNameforDOwnload);
-            map = servis.insert(objModel, idsupplier);
+            Barang b = new Barang();
+            b.setNama(nama);
+            b.setStok(stok);
+            b.setSatuan(satuan);
+            b.setHarga(harga);
+            b.setFilenama(fileNameforDOwnload);
+            map = servis.insert(b, idsupplier);
         } catch (Exception e) {
             e.printStackTrace();
             e.printStackTrace();

@@ -113,7 +113,7 @@ public class BarangImpl implements BarangService {
         try {
             Supplier supp = repoSupp.getbyID(idsupplier);
             barang.setSupplier(supp);
-
+            System.out.println("ini saya="+barang.getFilenama());
             Barang obj = repo.save(barang); //JPA
             map.put("data", obj);
             map.put("statusCode", "200");
