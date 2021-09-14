@@ -144,10 +144,12 @@ public class BarangImpl implements BarangService {
             }
 
             obj.setNama(barang.getNama());
-            obj.setHarga(obj.getHarga());
-            obj.setSatuan(obj.getSatuan());
-            obj.setStok(obj.getStok());
+            obj.setHarga(barang.getHarga());
+            obj.setSatuan(barang.getSatuan());
+            obj.setStok(barang.getStok());
             obj.setSupplier(supp);
+            // step 2 : yang ditambahin update untuk file uplaod
+            obj.setFilenama(barang.getFilenama());
 
 
             repo.save(obj);//save

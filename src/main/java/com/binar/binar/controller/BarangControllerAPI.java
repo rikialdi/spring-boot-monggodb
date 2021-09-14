@@ -1,7 +1,13 @@
 package com.binar.binar.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.binar.binar.controller.fileupload.UploadFileResponse;
 import com.binar.binar.entity.Barang;
 import com.binar.binar.entity.Supplier;
 import com.binar.binar.model.ModelBarang;
@@ -18,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 @RestController
@@ -123,14 +131,28 @@ public class BarangControllerAPI {
     }
 
 
-
-//    @GetMapping("/listpage/supp")
-//    @ResponseBody
-//    public ResponseEntity<Map>  supp() {
-//        Map map = new HashMap();
-//      List<Supplier> s= repoSupp.getList();
-//        map.put("data", s);
-//        return new ResponseEntity<Map>(map, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/v1/uploadlansgunginsert/{idsupplier}", method = RequestMethod.POST, consumes = {"multipart/form-data", "application/json"})
+    public ResponseEntity<Map> uploadFile(@RequestParam("file") MultipartFile file, @Valid @RequestBody Barang objModel, @PathVariable(value = "idsupplier") Long idsupplier) throws IOException {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMyyyyhhmmss");
+        String strDate = formatter.format(date);
+        System.out.println("date=" + strDate);
+        String UPLOADED_FOLDER = "D://temp//uploadbinar//karyawan//";
+        String fileName = UPLOADED_FOLDER + strDate + file.getOriginalFilename();
+        String fileNameforDOwnload = strDate + file.getOriginalFilename();
+        Path TO = Paths.get(fileName);
+        Map map = new HashMap();
+        try {
+            Files.copy(file.getInputStream(), TO); // pengolahan upload disini :
+            // insert barang
+            objModel.setFilenama(fileNameforDOwnload);
+            map = servis.insert(objModel, idsupplier);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.printStackTrace();
+            return new ResponseEntity<Map>(map, HttpStatus.OK);
+        }
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
+    }
 
 }

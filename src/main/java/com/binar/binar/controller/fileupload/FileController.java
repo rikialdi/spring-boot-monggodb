@@ -53,11 +53,11 @@ public class FileController {
         SimpleDateFormat formatter = new SimpleDateFormat("ddMyyyyhhmmss");
         String strDate = formatter.format(date);
         System.out.println("date=" + strDate);
-        // step 1 definisika path dan nama file yang akan dupalod . d://temp//fil1.txt
+//         String addFolderBarang= "barang//";
+//        String addFolderKaryawan= "karyawan//";
+         // D://temp//uploadbinar//karyawan//ddMyyyyhhmmssfilesaya.txt
         String fileName = UPLOADED_FOLDER + strDate + file.getOriginalFilename();
-//        String fileNameforDB = strDate + file.getOriginalFilename();
         String fileNameforDOwnload = strDate + file.getOriginalFilename();
-        // step 2 : cheak path untuk upload
         Path TO = Paths.get(fileName);
         System.out.println("fileNameforDOwnload=" + fileNameforDOwnload);
         System.out.println("file=" + file.getName());
@@ -104,23 +104,20 @@ public class FileController {
     @GetMapping("v1/showFile/{fileName:.+}")
     public ResponseEntity<Resource> showFile(@PathVariable String fileName, HttpServletRequest request) { // Load file as Resource : step 1 load path lokasi name file
         Resource resource = fileStorageService.loadFileAsResource(fileName);
-
         // Try to determine file's content type
         String contentType = null;
         try {
+            // dapatan URL download
             System.out.println("resource.getFile().getAbsolutePath" + resource.getFile().getAbsolutePath());
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 
         } catch (IOException ex) {
             logger.info("Could not determine file type.");
         }
-
         // Fallback to the default content type if type could not be determined
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
-
-
         System.out.println("filename=2=" + HttpHeaders.CONTENT_DISPOSITION);
         System.out.println("filename=3=" + resource.getFilename());
         System.out.println("filename=3=" + resource);
@@ -138,6 +135,7 @@ public class FileController {
                 .stream()
                 .map(file -> {
                     try {
+                        // step 1 : call method uplaod
                         return uploadFile(file);
                     } catch (IOException e) {
                         e.printStackTrace();

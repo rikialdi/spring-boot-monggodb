@@ -37,6 +37,17 @@ public class Barang extends AbstractDate implements Serializable  {
     @Column(name = "harga", nullable = false, length = 11)
     private int harga;
 
+    // langkah 1: bisa save atau update : buat nampung direktori yang diupload
+    @Column(name = "filenama", nullable = true, columnDefinition="TEXT")
+    private String filenama;
+//    step 1 : panggil rest api buat upload
+//            ambil response namafile  filenama.png
+//    {
+//        "nama":"ini nama",
+//        "satuan":"pcs",
+//        "filename":"filenama.png" : update, insert
+//    }
+
 
     @JsonIgnore
     @ManyToOne(targetEntity = Supplier.class, cascade = CascadeType.ALL)
