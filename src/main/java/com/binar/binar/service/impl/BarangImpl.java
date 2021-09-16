@@ -1,8 +1,10 @@
 package com.binar.binar.service.impl;
 
 import com.binar.binar.entity.Barang;
+import com.binar.binar.entity.BarangDetail;
 import com.binar.binar.entity.Supplier;
 import com.binar.binar.model.ModelBarang;
+import com.binar.binar.repository.BarangDetailRepo;
 import com.binar.binar.repository.BarangRepo;
 import com.binar.binar.repository.SupplierRepo;
 import com.binar.binar.service.BarangService;
@@ -29,6 +31,8 @@ public class BarangImpl implements BarangService {
     // // IOC DI
     @Autowired
     public BarangRepo repo;
+    @Autowired
+    public BarangDetailRepo repoDetailBarang;
 
     @Autowired
     public SupplierRepo repoSupp;
@@ -113,8 +117,14 @@ public class BarangImpl implements BarangService {
         try {
             Supplier supp = repoSupp.getbyID(idsupplier);
             barang.setSupplier(supp);
-            System.out.println("ini saya="+barang.getFilenama());
+//            System.out.println("ini saya 12="+barang.getDetailbrg().getNama());
+
+            //add save detail barang
+            BarangDetail detailbarang = repoDetailBarang.save(barang.getDetailbrg());
             Barang obj = repo.save(barang); //JPA
+
+            detailbarang.setDetailbarang(obj);
+            repoDetailBarang.save(detailbarang);
             map.put("data", obj);
             map.put("statusCode", "200");
             map.put("statusMessage", "Sukses");

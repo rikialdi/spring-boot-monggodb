@@ -116,7 +116,7 @@ public class FileController {
         }
         // Fallback to the default content type if type could not be determined
         if (contentType == null) {
-            contentType = "application/octet-stream";
+            contentType = "application/octet-stream";// type .json
         }
         System.out.println("filename=2=" + HttpHeaders.CONTENT_DISPOSITION);
         System.out.println("filename=3=" + resource.getFilename());

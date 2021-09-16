@@ -84,6 +84,7 @@ public class BarangControllerAPI {
         Map map = new HashMap();
         Map obj = servis.insert(objModel, idsupplier);
 
+
         map.put("Request =", objModel);
         map.put("Response =", obj);
         return new ResponseEntity<Map>(obj, HttpStatus.OK);// response

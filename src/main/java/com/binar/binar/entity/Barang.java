@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Id;//wajib untuk mysql
@@ -18,6 +19,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "barang")
+@Where(clause = "deleted_date is null")
 public class Barang extends AbstractDate implements Serializable  {
 
     @Id  // menyatakan primary key
@@ -71,6 +73,10 @@ public class Barang extends AbstractDate implements Serializable  {
 //    @DateTimeFormat(pattern = "dd-mm-yyyy")
 ////    @Column(columnDefinition = "date")
 //    public Date tanggalLahir;
+
+
+    @OneToOne(mappedBy = "detailbarang")
+    private BarangDetail detailbrg;
 
     }
 
