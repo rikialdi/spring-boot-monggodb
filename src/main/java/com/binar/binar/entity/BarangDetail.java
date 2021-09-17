@@ -17,7 +17,7 @@ public class BarangDetail  implements Serializable {
 
     @Id  // menyatakan primary key
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO) // automatis  ID ++
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // automatis  ID ++
     private Long id;
 
     @Column(name = "nama", nullable = false, length = 45)

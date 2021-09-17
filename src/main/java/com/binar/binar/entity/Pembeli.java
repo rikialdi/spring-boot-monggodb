@@ -19,7 +19,7 @@ public class Pembeli extends AbstractDate implements Serializable {
 
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nama", nullable = false, length = 45)

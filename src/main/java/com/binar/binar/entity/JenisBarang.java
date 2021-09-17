@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class JenisBarang  extends AbstractDate  implements Serializable {
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 

@@ -24,7 +24,7 @@ public class Barang extends AbstractDate implements Serializable  {
 
     @Id  // menyatakan primary key
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO) // automatis  ID ++, klmhahan seq make bersama.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // automatis  ID ++,auto:  klmhahan seq make bersama.
     private Long id;
 
     @Column(name = "nama", nullable = false, length = 45)
