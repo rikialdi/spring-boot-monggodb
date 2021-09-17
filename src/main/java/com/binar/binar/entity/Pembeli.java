@@ -1,5 +1,6 @@
 package com.binar.binar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -35,8 +37,9 @@ public class Pembeli extends AbstractDate implements Serializable {
     @OneToOne(mappedBy = "pembeli")
     private PembeliDetail pembelidetail;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pembeli")
-    Set<Transaksi> transaksi;
+    List<Transaksi> transaksi;
 
 
 

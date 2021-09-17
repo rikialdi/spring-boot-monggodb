@@ -1,5 +1,6 @@
 package com.binar.binar.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,12 +8,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 @Setter
 @Getter
 @Entity
-@Table(name = "transaksi")
-public class Transaksi  extends AbstractDate  implements Serializable {
+@Table(name = "jenisbarang")
+public class JenisBarang  extends AbstractDate  implements Serializable {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +25,7 @@ public class Transaksi  extends AbstractDate  implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "pembeli_id")
-    Pembeli pembeli;
+    @JoinColumn(name = "jenis_id")
+    Jenis jenis;
+
 }

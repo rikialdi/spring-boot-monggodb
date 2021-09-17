@@ -24,7 +24,7 @@ public class Barang extends AbstractDate implements Serializable  {
 
     @Id  // menyatakan primary key
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO) // automatis  ID ++
+    @GeneratedValue(strategy = GenerationType.AUTO) // automatis  ID ++, klmhahan seq make bersama.
     private Long id;
 
     @Column(name = "nama", nullable = false, length = 45)
@@ -55,9 +55,9 @@ public class Barang extends AbstractDate implements Serializable  {
     @ManyToOne(targetEntity = Supplier.class, cascade = CascadeType.ALL)
     private Supplier supplier;//ok
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "barang")
-    private Set<Transaksi> transaksi;
+    private List<Transaksi> transaksi;
 
     //
 //    @Column
@@ -77,6 +77,10 @@ public class Barang extends AbstractDate implements Serializable  {
 
     @OneToOne(mappedBy = "detailbarang")
     private BarangDetail detailbrg;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "barang")
+    private List<JenisBarang> jenisbarang;
 
     }
 
