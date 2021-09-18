@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Id;//wajib untuk mysql
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +28,7 @@ public class Barang extends AbstractDate implements Serializable  {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // automatis  ID ++,auto:  klmhahan seq make bersama.
     private Long id;
 
+    @NotBlank(message = "Nama is mandatory")
     @Column(name = "nama", nullable = false, length = 45)
     private String nama;
 
