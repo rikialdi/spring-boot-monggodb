@@ -7,5 +7,6 @@ import java.util.Map;
 
 public interface PembeliService {
     public Map insert(Pembeli pembeli);
+
     public Map getData();
 }

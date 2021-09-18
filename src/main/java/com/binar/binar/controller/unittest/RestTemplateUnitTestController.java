@@ -30,12 +30,12 @@ public class RestTemplateUnitTestController {
         headers.set("Accept", "*/*");
         headers.set("Content-Type", "application/json");
         String bodyTesting = "{\n" +
-                "    \"nama\":\"barang2detail\",\n" +
+                "    \"nama\":\"barang 4\",\n" +
                 "    \"stok\":\"10\",\n" +
                 "    \"satuan\":\"pcs\",\n" +
                 "    \"harga\":\"1000\",\n" +
                 "    \"detailbrg\": {\n" +
-                "        \"nama\":\"detailbarang2\"\n" +
+                "        \"nama\":\"barang 4\"\n" +
                 "    }\n" +
                 "}";
         HttpEntity<String> entity = new HttpEntity<String>(bodyTesting, headers);

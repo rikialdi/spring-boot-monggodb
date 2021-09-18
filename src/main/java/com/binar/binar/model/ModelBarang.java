@@ -22,4 +22,5 @@ public class ModelBarang {
         this.id = id;
         this.nama= nama;
     }
+
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class Supplier extends AbstractDate implements Serializable {
     @Column(name = "nama", nullable = false, length = 45)
     private String nama;
 
+    @Pattern(regexp ="^\\+?[0-9. ()-]{7,25}$", message = "Phone number")
     @Column(name = "hp", nullable = false, length = 15)
     private String hp;
 

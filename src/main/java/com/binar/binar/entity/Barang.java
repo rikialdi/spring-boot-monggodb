@@ -32,13 +32,16 @@ public class Barang extends AbstractDate implements Serializable  {
     @Column(name = "nama", nullable = false, length = 45)
     private String nama;
 
+//    @NotBlank(message = "Stok is mandatory") : tidak bisa validasi integer: hanya bisa pada string
     @Column(name = "stok", nullable = false, length = 11)
     private int stok;
 
+    @NotBlank(message = "Satuan is mandatory")
     @Column(name = "satuan", nullable = false, length = 45)
     private String satuan;
 
-    @Column(name = "harga", nullable = false, length = 11)
+//    @NotBlank(message = "Harga is mandatory")
+    @Column(name = "harga", nullable = true, length = 11)
     private int harga;
 
     // langkah 1: bisa save atau update : buat nampung direktori yang diupload
