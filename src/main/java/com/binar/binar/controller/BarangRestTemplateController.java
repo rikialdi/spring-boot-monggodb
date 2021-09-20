@@ -32,8 +32,8 @@ public class BarangRestTemplateController {
         Map obj = service.insert(objModel, idsupplier);
 
 
-        map.put("Request =", objModel);
-        map.put("Response =", obj);
+        map.put("data", obj);
+        map.put("", obj);
         return new ResponseEntity<Map>(obj, HttpStatus.OK);// response
     }
 

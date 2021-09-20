@@ -30,6 +30,7 @@ public class BarangRestTemplateImpl implements BarangRestTemplateService {
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
 
+
     @Override
     public Map insert(Barang barang, Long idsupplier) {
         Map map = new HashMap();
@@ -54,6 +55,7 @@ public class BarangRestTemplateImpl implements BarangRestTemplateService {
 
     @Override
     public Map update(Barang barang, Long idsupplier) {
+//        https://www.baeldung.com/rest-template
 //        https://github.com/raviyasas/SpringBoot-RestTemplate-demo/blob/master/src/main/java/com/app/demo/service/ApiService.java
         return null;
     }

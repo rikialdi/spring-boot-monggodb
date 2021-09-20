@@ -30,7 +30,7 @@ public class RestTemplateUnitTestController {
         headers.set("Accept", "*/*");
         headers.set("Content-Type", "application/json");
         String bodyTesting = "{\n" +
-                "    \"nama\":\"barang 4\",\n" +
+                "    \"nama\":\"barang 40\",\n" +
                 "    \"stok\":\"10\",\n" +
                 "    \"satuan\":\"pcs\",\n" +
                 "    \"harga\":\"1000\",\n" +
@@ -41,7 +41,7 @@ public class RestTemplateUnitTestController {
         HttpEntity<String> entity = new HttpEntity<String>(bodyTesting, headers);
 
         Long idsupplier = 1L;
-        ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:8080/api/v1/binar/save/"+idsupplier , HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:8080/api/v1/rt/save/"+idsupplier , HttpMethod.POST, entity, String.class);
 
         assertEquals(HttpStatus.OK, exchange.getStatusCode());
         System.out.println("response save barang="+exchange.getBody());
@@ -56,7 +56,7 @@ public class RestTemplateUnitTestController {
         headers.set("Content-Type", "application/json");
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
-        ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:8080/api/v1/binar/listpage" , HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:8080/api/v1/rt/list" , HttpMethod.GET, entity, String.class);
 
         assertEquals(HttpStatus.OK, exchange.getStatusCode());
         System.out.println("response list barang="+exchange.getBody());
