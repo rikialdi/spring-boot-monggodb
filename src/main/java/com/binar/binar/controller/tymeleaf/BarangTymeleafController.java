@@ -3,6 +3,7 @@ package com.binar.binar.controller.tymeleaf;
 
 import com.binar.binar.entity.Barang;
 import com.binar.binar.repository.BarangRepo;
+import com.binar.binar.service.BarangService;
 import com.binar.binar.service.BarangTymeleafService;
 import com.binar.binar.utils.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-@Controller
+@Controller // perbadaan pertama
 @RequestMapping("/v1/view/barang")// localhost :8080/v1/binar
 public class BarangTymeleafController {
 
@@ -30,11 +33,13 @@ public class BarangTymeleafController {
 
     private final int ROW_PER_PAGE = 5;
 
+//    Index Page
     @GetMapping(value = {"/", "/index"})
     public String index(Model model) {
         model.addAttribute("title", "Title Saya");
         return "index";
     }
+
 
     @GetMapping(value = "/list")
     public String getBarang(Model model,

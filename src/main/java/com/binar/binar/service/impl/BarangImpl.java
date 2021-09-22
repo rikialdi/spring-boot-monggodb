@@ -18,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
+//import org.thymeleaf.util.StringUtils;
 
 import java.util.*;
 
@@ -138,29 +138,29 @@ public class BarangImpl implements BarangService, BarangTymeleafService {
 
     @Override
     public Barang saveTymeleaf(Barang barang) throws BadResourceException {
-        if (!StringUtils.isEmpty(barang.getNama())) {
+//        if (!StringUtils.isEmpty(barang.getNama())) {
             return repo.save(barang);
-        }
-        else {
-            BadResourceException exc = new BadResourceException("Failed to save barang");
-            exc.addErrorMessage("barang is null or empty");
-            throw exc;
-        }
+//        }
+//        else {
+//            BadResourceException exc = new BadResourceException("Failed to save barang");
+//            exc.addErrorMessage("barang is null or empty");
+//            throw exc;
+//        }
     }
 
     @Override
     public void updateTymeleaf(Barang barang) throws ResourceNotFoundException, BadResourceException {
-        if (!StringUtils.isEmpty(barang.getNama())) {
+//        if (!StringUtils.isEmpty(barang.getNama())) {
             if (!existsByIdTymeleaf(barang.getId())) {
                 throw new ResourceNotFoundException("Cannot find Barang with id: " + barang.getId());
             }
             repo.save(barang);
-        }
-        else {
-            BadResourceException exc = new BadResourceException("Failed to save Barang");
-            exc.addErrorMessage("Barang is null or empty");
-            throw exc;
-        }
+//        }
+//        else {
+//            BadResourceException exc = new BadResourceException("Failed to save Barang");
+//            exc.addErrorMessage("Barang is null or empty");
+//            throw exc;
+//        }
     }
 
     @Override

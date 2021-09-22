@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>View Jenis</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>View Jenis</h1>
+<a th:href="@{/v1/view/jenis/list}">Back to Jenis List</a>
+<br/><br/>
+<div th:if="${jenis}">
+    <table border="0">
+        <tr>
+            <td>Jenis</td>
+            <td>:</td>
+            <td th:utext="${jenis.jenis}">...</td>
+        </tr>
+    </table>
+    <br/><br/>
+    <div th:if="not ${allowDelete}">
+        <a th:href="@{/v1/view/jenis/{jenisId}/edit(jenisId=${jenis.id})}">Edit</a> |
+        <a th:href="@{/v1/view/jenis/{jenisId}/delete(jenisId=${jenis.id})}">Delete</a>
+    </div>
+    <form th:if="${allowDelete}" th:action="@{/v1/view/jenis/{jenisId}/delete(jenisId=${jenis.id})}" method="POST">
+        Delete this jenis? <input type="submit" th:value="Yes" />
+    </form>
+</div>
+<div th:if="${errorMessage}" th:utext="${errorMessage}" class="error" />
+</body>
+</html>
